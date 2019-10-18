@@ -6,9 +6,6 @@ module.exports = {
         const advancedSearchPage = browser.page.googleAdvancedSearch();
         const resultsPage = browser.page.resultsPage
 
-        const resultsPageQuerySelector = `#searchform input[name="q"][value="${mainQuery}"]`;
-        const laguageSettingSelector = `[aria-label="Search Italian pages"]`;
-        const timeSettingSelector = `[aria-label="Past month"]`
 
         advancedSearchPage
             .navigate()
@@ -20,9 +17,10 @@ module.exports = {
             .assert.urlContains('lr=lang_it', 'Language is Italian')
             .assert.urlContains('as_qdr=m', 'Time period is last month')
         
-        browser.assert.visible(resultsPageQuerySelector, "UI: Elon Musk is set in Query Input")
-        browser.assert.visible(laguageSettingSelector, "UI: Language is set to Italian")
-        browser.assert.visible(timeSettingSelector, "UI: Timeframe is set to past month")
+        resultsPage
+            .resultIs(mainQuery, "UI: Elon Musk is set in Query Input")
+            .assert.visible("@laguageSetting", "UI: Language is set to Italian")
+            .assert.visible("@timeSetting", "UI: Timeframe is set to past month")
             .saveScreenshot('tests_output/google.png')
     },
 };
