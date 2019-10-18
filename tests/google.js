@@ -4,7 +4,7 @@ module.exports = {
         const mainQuery = "Elon Musk"
 
         const advancedSearchPage = browser.page.googleAdvancedSearch();
-        const resultsPage = browser.page.resultsPage
+        const resultsPage = browser.page.resultsPage();
 
 
         advancedSearchPage
@@ -18,7 +18,7 @@ module.exports = {
             .assert.urlContains('as_qdr=m', 'Time period is last month')
         
         resultsPage
-            .resultIs(mainQuery, "UI: Elon Musk is set in Query Input")
+            .assert.visible("@resultsPageQuery", "UI: Elon Musk is set in Query Input")
             .assert.visible("@laguageSetting", "UI: Language is set to Italian")
             .assert.visible("@timeSetting", "UI: Timeframe is set to past month")
             .saveScreenshot('tests_output/google.png')
